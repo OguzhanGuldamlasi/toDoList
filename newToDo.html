@@ -1,0 +1,315 @@
+<section>
+    <div id="myDIV" class="header">
+        <h2 style="margin:5px">My To Do List</h2>
+        <input onkeydown="check(this.value);checkAgain(this.value)" onkeyup="check(this.value);checkAgain(this.value)"  type="text" id="myInput"  required placeholder="Title...">
+        <input type="number" id="prio" min="1" max="5" required placeholder="Priority...">
+        <button onclick="newElement()" class="addBtn">Add</button>
+    </div>
+    <div> <span id="blurSpan"></span></div>
+    <div class="tbl-header">
+        <table id="myTABLE" cellpadding="0" cellspacing="0" border="0">
+            <tbody id="myBODY">
+            <tr>
+                <td>Priority</td>
+                <td>Job</td>
+                <td>Finished?</td>
+                <td>Edit</td>
+                <td>Delete</td>
+                <td>Save</td>
+            </tr>
+        </tbody>
+        </table>
+
+    </div>
+</section>
+<style>
+    {box-sizing: border-box;}
+
+    /* Button used to open the contact form - fixed at the bottom of the page */
+
+
+    /* Full-width input fields */
+    .form-container input[type=text], .form-container input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+    }
+
+    /* When the inputs get focus, do something */
+    .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+    /* Set a style for the submit/login button */
+    .form-container .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom:10px;
+        opacity: 0.8;
+    }
+
+    /* Add a red background color to the cancel button */
+    .form-container .cancel {
+        background-color: red;
+    }
+
+    /* Add some hover effects to buttons */
+    .form-container .btn:hover, .open-button:hover {
+        opacity: 1;
+    }
+    h1{
+        font-size: 30px;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 300;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    table{
+        width:100%;
+        table-layout: fixed;
+    }
+    .tbl-header{
+        background-color: rgba(255,255,255,0.3);
+    }
+    .tbl-content{
+        height:300px;
+        overflow-x:auto;
+        margin-top: 0px;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+    th{
+        padding: 20px 15px;
+        text-align: left;
+        font-weight: 500;
+        font-size: 12px;
+        color: #fff;
+        text-transform: uppercase;
+    }
+    td{
+        padding: 15px;
+        text-align: left;
+        vertical-align:middle;
+        font-weight: 300;
+        font-size: 12px;
+        color: #fff;
+        border-bottom: solid 1px rgba(255,255,255,0.1);
+    }
+
+
+    /* demo styles */
+
+    @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+    body{
+        background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+        background: linear-gradient(to right, #25c481, #25b7c4);
+        font-family: 'Roboto', sans-serif;
+    }
+    section{
+        margin: 50px;
+    }
+
+
+    /* follow me template */
+    .made-with-love {
+        margin-top: 40px;
+        padding: 10px;
+        clear: left;
+        text-align: center;
+        font-size: 10px;
+        font-family: arial;
+        color: #fff;
+    }
+    .made-with-love i {
+        font-style: normal;
+        color: #F50057;
+        font-size: 14px;
+        position: relative;
+        top: 2px;
+    }
+    .made-with-love a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+
+
+    /* for custom scrollbar for webkit browser*/
+
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+    ::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+</style>
+<script>
+
+
+    function check(val) {
+        let span=document.getElementById("blurSpan");
+        let nodeList=document.getElementsByTagName("tr");
+        if(nodeList.length<=1)
+            return;
+        for (let i = 1; i <nodeList.length ; i++) {
+            let tRow=nodeList[i];
+            if(tRow.getElementsByTagName("td")[1].innerText==val){
+                span.innerText="Error";
+                return ;
+            }
+        }
+    }
+    function checkAgain(val){
+        let span=document.getElementById("blurSpan");
+        let nodeList=document.getElementsByTagName("tr");
+        if(nodeList.length<=1)
+            return;
+        for (let i = 1; i <nodeList.length ; i++) {
+            let tRow=nodeList[i];
+            if(tRow.getElementsByTagName("td")[1].innerText==val){
+
+                return ;
+            }
+        }
+        let span1=document.getElementById("blurSpan");
+        span1.innerText="";
+    }
+    function addElement(value,prio){
+        if(value==""){
+            return;
+        }
+        let body=document.getElementById("myBODY");
+        let tRow=document.createElement("tr");//trow created
+        let job=document.createElement("td");
+        let prior=document.createElement("td");
+        let nodeList=document.getElementsByTagName("tr");
+        let jobDiv=document.createElement("div");
+        let priorDiv=document.createElement("div");
+        jobDiv.innerText=value;
+        priorDiv.innerText=prio;
+        if(document.getElementsByTagName("span")[0].innerText!=""){
+            return
+        }
+        job.appendChild(jobDiv);
+        prior.appendChild(priorDiv);
+
+        tRow.appendChild(prior);
+        tRow.appendChild(job);
+
+        let editButton=document.createElement("button");
+
+        let deleteButton=document.createElement("button");
+
+        let checkBox=document.createElement("input");
+
+        let saveButton=document.createElement("button");
+        checkBox.setAttribute("type","checkbox");
+        checkBox.onclick=function (){
+            if(check(this)){
+              let p=  this.parentNode;
+              let pp=p.parentNode;
+              pp.style.backgroundColor="blue";
+            }
+            else{
+                let p=  this.parentNode;
+                let pp=p.parentNode;
+                pp.style.backgroundColor="transparent";
+            }
+
+        };
+        function check(checkbox) {
+            return checkbox.checked;
+        }
+        editButton.innerText="Edit";
+        deleteButton.innerText="Delete";
+        saveButton.innerText="Save";
+
+        let editTD=document.createElement("td");
+        let deleteTD=document.createElement("td");
+        let checkBoxTD=document.createElement("td");
+        let saveTD=document.createElement("td");
+
+
+        deleteTD.appendChild(deleteButton);
+        checkBoxTD.appendChild(checkBox);
+        editTD.appendChild(editButton);
+        saveTD.appendChild(saveButton);
+
+        tRow.appendChild(checkBoxTD);
+        tRow.appendChild(editTD);
+        tRow.appendChild(deleteTD);
+        tRow.appendChild(saveTD);
+
+        deleteButton.onclick=function(){
+          let parent=this.parentNode;
+          let pparent=parent.parentNode;
+          let pppparent=pparent.parentNode;
+          pppparent.removeChild(pparent);
+        };
+
+        editButton.onclick=function(){
+           let row= this.parentNode.parentNode;
+           let td1=this.parentNode.parentNode.firstChild;
+           let td2=this.parentNode.parentNode.firstChild.nextSibling;
+            let div1=td1.getElementsByTagName("div");
+            div1[0].contentEditable="true";
+            let div2=td2.getElementsByTagName("div");
+            div2[0].contentEditable="true";
+
+        };
+        saveButton.onclick=function(){
+            let row= this.parentNode.parentNode;
+            let td1=this.parentNode.parentNode.firstChild;
+            let td2=this.parentNode.parentNode.firstChild.nextSibling;
+            let div1=td1.getElementsByTagName("div");
+            div1[0].contentEditable="false";
+            let div2=td2.getElementsByTagName("div");
+            div2[0].contentEditable="false";
+        };
+        body.appendChild(tRow);
+        sortList();
+    }
+    function newElement(){//wrapper method
+        let val=document.getElementById("myInput");
+        let pri=document.getElementById("prio");
+        addElement(val.value,pri.value);
+        clearText();
+    }
+    function clearText(){
+        document.getElementById("myInput").value="";
+        document.getElementById("prio").value="";
+    }
+    function sortList(){
+        let container=document.getElementById("myBODY");
+        let contents=container.querySelectorAll("tr");
+        if(contents.length==0 || contents.length=="0"){
+            return;
+        }
+
+        let myList=[];
+        for (let i=0;i<contents.length;i++){
+            myList.push(contents[i]);
+        }
+
+        myList.sort(function (a,b) {
+            let aa=parseInt(a.firstChild.innerHTML);
+            let bb=parseInt(b.firstChild.innerHTML);
+            return aa<bb ?-1 :(aa >bb ?1 : 0);
+        });
+        myList.reverse();
+        for(let i=0; i<myList.length; i++){
+            container.insertBefore(myList[i], container.firstChild);
+        }
+
+    }
+</script>
